@@ -55,10 +55,17 @@ def preparar_dados(diretorio):
     X = dados_completos.drop(columns=target_columns)
     y = dados_completos['FTR_H']
 
+    # Adicionar colunas de odds relevantes ao conjunto de dados
+    odds_columns = ['B365H', 'B365D', 'B365A', 'PSCA', 'VCCH']
+    X = pd.concat([X, dados_completos[odds_columns]], axis=1)
+
+    # Salvar os dados completos com odds para uso posterior
+    dados_completos.to_csv('dados_completos_com_odds.csv', index=False)
+    X.to_csv('features.csv', index=False)
+    y.to_csv('target.csv', index=False)
+
     return X, y
 
 if __name__ == "__main__":
     diretorio = 'C:/Users/rrmartins/OneDrive - myPartner - Consultoria Informática, S.A/Desktop/AI Model'
     X, y = preparar_dados(diretorio)
-    X.to_csv('features.csv', index=False)
-    y.to_csv('target.csv', index=False)
